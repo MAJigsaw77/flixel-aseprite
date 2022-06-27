@@ -1,0 +1,11 @@
+{
+	"name": "flixel-aseprite",
+	"url" : "https://github.com/jigsaw-4277821/flixel",
+	"license": "MIT",
+	"tags": ["flixel", "aseprite"],
+	"description": "HaxeFlixel is a 2D game engine based on OpenFL that delivers cross-platform games.",
+	"version": "1.0.0",
+	"releasenote": "The first release of the library.",
+	"contributors": ["jigsaw-4277821", "zackgamerz"],
+	"dependencies": {}
+}

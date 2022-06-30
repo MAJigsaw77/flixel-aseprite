@@ -1,8 +1,11 @@
 package aseprite;
 
 import aseprite.Data.AsepriteData;
+import flixel.FlxG;
 import flixel.graphics.FlxGraphic;
+import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame.FlxFrameAngle;
+import flixel.util.typeLimit.OneOfTwo;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.system.FlxAssets.FlxGraphicAsset;
@@ -26,17 +29,24 @@ class FlxAseprite extends FlxAtlasFrames
 	 *                        You can also directly pass in the parsed object.
 	 * @return  Newly created `FlxAtlasFrames` collection.
 	 */
-	public static function fromAseprite(Source:FlxGraphicAsset, Description:AsepriteData):FlxAtlasFrames
+	public static function fromAseprite(Source:FlxGraphicAsset, Description:FlxAsepriteSource):FlxAtlasFrames
 	{
+		var graphic:FlxGraphic = FlxG.bitmap.add(Source, false);
+		if (graphic == null)
+			return null;
+
 		var frames:FlxAtlasFrames = FlxAtlasFrames.findFrame(graphic);
 		if (frames != null)
 			return frames;
+
+		if (graphic == null || Description == null)
+			return null;
 
 		frames = new FlxAtlasFrames(graphic);
 
 		var data:AsepriteData;
 
-		if ((Description is String))
+		if (Description is String)
 		{
 			var json:String = Description;
 
@@ -97,3 +107,5 @@ class FlxAseprite extends FlxAtlasFrames
 		Frames.addAtlasFrame(frameRect, sourceSize, offset, FrameName, FlxFrameAngle.ANGLE_0, false, false);
 	}
 }
+
+typedef FlxAsepriteSource = OneOfTwo<String, AsepriteData>;

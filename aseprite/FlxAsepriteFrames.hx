@@ -1,6 +1,5 @@
 package aseprite;
 
-import aseprite.Data.AsepriteData;
 import flixel.FlxG;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -12,7 +11,97 @@ import flixel.system.FlxAssets.FlxGraphicAsset;
 import openfl.Assets;
 import haxe.Json;
 
-class FlxAseprite extends FlxAtlasFrames
+typedef AsepriteData =
+{
+	var frames:Dynamic;
+	var meta:
+		{
+			app:String;
+			version:String;
+			image:String;
+			format:String;
+			size:
+				{
+					w:Float;
+					h:Float;
+				};
+			scale:String;
+			frameTags:Array<AsepriteFrameTag>;
+			layers:Array<AsepriteLayers>;
+			slices:Array<AsepriteSlices>;
+		};
+}
+
+typedef AsepriteFrame =
+{
+	var frame:
+		{
+			x:Float;
+			y:Float;
+			w:Float;
+			h:Float;
+		};
+	var rotated:Bool;
+	var trimmed:Bool;
+	var spriteSourceSize:
+		{
+			x:Float;
+			y:Float;
+			w:Float;
+			h:Float;
+		};
+	var sourceSize:
+		{
+			x:Float;
+			y:Float;
+		};
+	var duration:Float;
+}
+
+typedef AsepriteFrameTag =
+{
+	var name:String;
+	var from:Float;
+	var to:Float;
+	var direction:String;
+}
+
+typedef AsepriteLayers =
+{
+	var name:String;
+	var opacity:Float;
+	var blendMode:String;
+}
+
+typedef AsepriteSlices =
+{
+	var name:String;
+	var color:String;
+	var keys:Array<AsepriteSlicesKeys>;
+}
+
+typedef AsepriteSlicesKeys =
+{
+	var frame:Float,
+	var bounds:
+		{
+			x:Float;
+			y:Float;
+			w:Float;
+			h:Float;
+		};
+	var center:
+		{
+			x:Float;
+			y:Float;
+			w:Float;
+			h:Float;
+		};
+}
+
+typedef FlxAsepriteSource = OneOfTwo<String, AsepriteData>;
+
+class FlxAsepriteFrames extends FlxAtlasFrames
 {
 	public function new(parent:FlxGraphic, ?border:FlxPoint)
 	{
@@ -107,5 +196,3 @@ class FlxAseprite extends FlxAtlasFrames
 		Frames.addAtlasFrame(frameRect, sourceSize, offset, FrameName, FlxFrameAngle.ANGLE_0, false, false);
 	}
 }
-
-typedef FlxAsepriteSource = OneOfTwo<String, AsepriteData>;
